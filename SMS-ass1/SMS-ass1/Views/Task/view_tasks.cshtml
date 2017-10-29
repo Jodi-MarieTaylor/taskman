@@ -1,0 +1,316 @@
+﻿@model IEnumerable<SMS_ass1.Models.Task>
+
+@{
+    ViewBag.Title = "view_tasks";
+}
+<style>
+    .dropbtn {
+        
+        border: none;
+        cursor: pointer;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+            .dropdown-content a:hover {
+                background-color: #f1f1f1
+            }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    
+</style>
+<h2>View Tasks</h2>
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<p>Type something in the input field to search the table:</p>
+<input class="form-control" id="myInput" type="text" placeholder="Search..">
+<br>
+<div class="row">
+
+    <table class="table">
+        <thead>
+            <tr class="filters">
+                <th>
+                  
+                    <label for="due-filter" class="center-align ">Due Date</label>
+
+                    <input type="date" id="due-filter" class="form-control" >
+                </th>
+                <th>
+                    Status
+                    <select id="status-filter" class="form-control">
+                        <option>Any</option>
+                        <option>Not Started</option>
+                        <option>In Progress</option>
+                        <option>Completed</option>
+                    </select>
+                </th>
+                <th>
+                    Category
+                    <select id="milestone-filter" class="form-control">
+                        <option>None</option>
+                        <option>General</option>
+                        <option>Home</option>
+                        <option>Work</option>
+                        <option>Personal</option>
+                        <option>Event</option>
+                        <option>Family</option>
+                    </select>
+                </th>
+                <th>
+                    Priority
+                    <select id="priority-filter" class="form-control">
+                        <option>Any</option>
+                        <option>Low</option>
+                        <option>Medium</option>
+                        <option>High</option>
+                        <option>Urgent</option>
+                    </select>
+                </th>
+               
+            </tr>
+        </thead>
+    </table>
+
+
+    <div class="panel panel-primary filterable">
+        <div class="panel-heading">
+            <h3 class="panel-title">Tasks</h3>
+            <div class="pull-right"></div>
+        </div>
+
+
+
+
+
+        <table id="task-list-tbl" class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Created</th>
+                    <th>Due Date</th>
+                    <th>Priority</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    
+                </tr>
+            </thead>
+            <tbody id="myTable">
+                @foreach (var item in Model)
+            {
+
+                    <tr id="@item.id"
+                    class="task-list-row"
+                    data-task-id="@item.id"
+                    data-due-date= @item.due
+                    data-status= "@item.status"
+                    data-milestone= @item.category
+                    data-priority="@item.priority"
+                    data-tags="Tag 2"
+                        >
+                     
+                        <td>
+                            @Html.DisplayFor(modelItem => item.title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.inserted_at)
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.due)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.priority)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.category)
+                        </td>
+                     
+                       
+                        <td>
+                            @Html.DisplayFor(modelItem => item.status)
+                        </td>
+                       
+                        
+                        <td>
+                            @Html.ActionLink("Update", "Update", new { id = item.id }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.id }) |
+                       
+
+                            <div class="dropdown">
+                                <button class="dropbtn">Subtasks</button>
+                                <div class="dropdown-content">
+                                    <a href="/task/createsub/@item.id">Create Subtasks</a> |
+                                    <a href="/task/viewsub/@item.id">View Subtasks</a>
+                                    
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+
+                }
+            </tbody>   
+        </table>
+    </div>
+</div>
+
+
+  
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog" style="margin: 0 0 0 0;">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Subtasks</h4>
+                </div>
+                <div class="modal-body">
+                    <a href="/task/createsub/dataid">Create Subtasks</a>
+                    <br />
+                    <a href="/task/viewsub">View Subtasks</a>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+   
+
+
+
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+
+        // Assigned User Dropdown Filter
+        $('#due-filter').on('change', function () {
+            var dueDate = this.value;
+
+            if (dueDate === 'None') {
+                $('.task-list-row').hide().filter(function () {
+                    return $(this).data('due-date') != dueDate;
+                }).show();
+            } else {
+                $('.task-list-row').hide().filter(function () {
+                    return $(this).data('due-date') == dueDate;
+                }).show();
+            }
+        });
+
+
+        // Task Status Dropdown Filter
+        $('#status-filter').on('change', function () {
+            var taskStatus = this.value;
+            console.log(taskStatus);
+            if (taskStatus === 'Any') {
+                $('.task-list-row').hide().filter(function () {
+                    return $(this).data('status') != taskStatus;
+                }).show();
+            } else {
+                $('.task-list-row').hide().filter(function () {
+                    return $(this).data('status') == taskStatus;
+                }).show();
+            }
+        });
+
+
+
+        // Task Milestone Dropdown Filter
+        $('#milestone-filter').on('change', function () {
+            var taskMilestone = this.value;
+            if (taskMilestone === 'None') {
+                $('.task-list-row').hide().filter(function () {
+                    return $(this).data('milestone') != taskMilestone;
+                }).show();
+            } else {
+                $('.task-list-row').hide().filter(function () {
+                    return $(this).data('milestone') == taskMilestone;
+                }).show();
+            }
+        });
+
+
+        // Task Priority Dropdown Filter
+        $('#priority-filter').on('change', function () {
+            var taskPriority = this.value;
+
+            if (taskPriority === 'Any') {
+                $('.task-list-row').hide().filter(function () {
+                    return $(this).data('priority') != taskPriority;
+                }).show();
+            } else {
+                $('.task-list-row').hide().filter(function () {
+                    return $(this).data('priority') == taskPriority;
+                }).show();
+            }
+        });
+
+
+        // Task Tags Dropdown Filter
+        $('#tags-filter').on('change', function () {
+            var taskTags = this.value;
+
+            if (taskTags === 'None') {
+                $('.task-list-row').hide().filter(function () {
+                    return $(this).data('tags') != taskTags;
+                }).show();
+            } else {
+                $('.task-list-row').hide().filter(function () {
+                    return $(this).data('tags') == taskTags;
+                }).show();
+            }
+        });
+
+
+
+/*
+future use for a text input filter
+$('#search').on('click', function() {
+    $('.box').hide().filter(function() {
+        return $(this).data('order-number') == $('#search-criteria').val().trim();
+    }).show();
+});*/
+    </script>
+

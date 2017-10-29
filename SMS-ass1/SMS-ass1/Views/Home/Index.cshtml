@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@if (ViewBag.Result != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Result");
+            };
+    </script>
+}
+@if (ViewBag.Login == true)
+{
+    <br />
+
+    <div class="alert alert-success alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+        <strong>Success!</strong> You are now logged in.
+    </div>
+}
+@if (HttpContext.Current.Session["tmuser_name"] != null)
+
+    {
+<div class="jumbotron">
+    <h1>Hi @Session["tmuser_name"]</h1>
+    <p class="lead">Welcome to TaskMan, the best task management system out there</p>
+    <p><a href="/task/create" class="btn btn-primary btn-lg">Create A Task Now &raquo;</a></p>
+</div>
+
+
+    }
+
+   else
+    {
+
+        <div class="jumbotron">
+            <h1>TaskMan</h1>
+            <p class="lead">Create and Manage your day to day tasks with ease with the help of the new TaskMan</p>
+            <p><a href="/auth/signup" class="btn btn-primary btn-lg">Get Started Now &raquo;</a></p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <h2>Creat and View Tasks</h2>
+                <p>Create and View tasks with ease using TaskMan </p>
+            </div>
+            <div class="col-md-4">
+                <h2>Update and Delete Tasks</h2>
+                <p>You can now update and delete tasks with a click of a button</p>
+            </div>
+            <div class="col-md-4">
+                <h2>Send Reminder Emails</h2>
+                <p>Remind yourself of important tasks by sending reminder emails</p>
+            </div>
+        </div>
+
+    }

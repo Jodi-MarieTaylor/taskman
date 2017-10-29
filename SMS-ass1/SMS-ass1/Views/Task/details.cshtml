@@ -1,0 +1,122 @@
+﻿@model SMS_ass1.Models.Task
+
+@{
+    ViewBag.Title = "details";
+}
+
+
+<div>
+    <h3 >Details for @Html.DisplayFor(model => model.title)</h3>
+    <hr />
+    <dl class="dl-horizontal">
+      
+        <dt>
+            Task ID
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.id)
+        </dd>
+        <dt>
+            Title
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.title)
+        </dd>
+
+        <dt>
+           Description
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.description)
+        </dd>
+
+        <dt>
+           Category
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.category)
+        </dd>
+
+        <dt>
+            Due Date
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.due)
+        </dd>
+
+        <dt>
+            Notes
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.notes)
+        </dd>
+
+        <dt>
+            Priority
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.priority)
+        </dd>
+        <dt>
+            Recurrence
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.re_dates)
+        </dd>
+
+        <dt>
+          Status
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status)
+        </dd>
+
+        <dt>
+            Recurring Date
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.rec_date)
+        </dd>
+
+        
+
+        <dt>
+          Created At
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.inserted_at)
+        </dd>
+
+        <dt>
+          Last Updated
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.updated_at)
+        </dd>
+
+        <dt>
+            Parent Task
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.parent_task)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Update", "Update", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

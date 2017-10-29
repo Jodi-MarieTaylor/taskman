@@ -1,0 +1,117 @@
+﻿@model SMS_ass1.Models.User
+
+@{
+    ViewBag.Title = "signup";
+}
+
+
+
+@using (Html.BeginForm("signup2", "Auth", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div id="login-page" class="row center-align s12" style="font-size: 20px;  margin: 20px auto;">
+
+        <div class="" style="margin: 0 auto; background-color: white; max-width: 500px; ">
+            <form class="login-form center-align" style=" margin: 0 auto;">
+
+                <div class="row">
+                    <div class="input-field col s12 center">
+                        <h3 style="text-align: center;"> TaskMan Registration Form</h3>
+                        <p class="center" style="text-align: center;">Join to our community now !</p>
+                    </div>
+                </div>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div style=" max-width: 80%; margin: 0 auto;" >
+
+                    <div class="row">
+                        <div class="input-field col s12" >
+                         
+                            <label for="model.name" class="center-align" style="font-size: 13px; ">Name</label>
+
+                            @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+
+                        </div>
+
+                    </div>
+                   
+
+                    <div class="row">
+                        <div class="input-field col s12" >
+                           
+                            <label for="model.username" class="center-align" style="font-size: 13px; ">Username</label>
+
+                            @Html.EditorFor(model => model.user_name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.user_name, "", new { @class = "text-danger" })
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12" >
+                           
+                            <label for="model.email" class="center-align" style="font-size: 13px; ">Email</label>
+
+                            @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12" >
+                            
+                            <label for="model.phone" class="center-align" style="font-size: 13px; ">Phone</label>
+
+                            @Html.EditorFor(model => model.phone, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
+
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12" >
+                           
+                            <label for="model.address" class="center-align" style="font-size: 13px; ">Address</label>
+
+                            @Html.EditorFor(model => model.address, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
+
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12" >
+                            
+                            <label for="model.password" class="center-align" style="font-size: 13px; ">Password</label>
+
+                            @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", Type = "password"} })
+                            @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                  
+                    <br/>
+                    <div class="row center">
+                        <div class="input-field col s12 center">
+
+                            <input type="submit" value="Register Now" class="btn waves-effect waves-light col s6 center" />
+                        </div>
+
+                        <div class="input-field col s12">
+                            <p class="margin center sign-up" style="font-size: 14px;">Already have an account? <a href="/auth/login">Login</a></p>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        
+
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
